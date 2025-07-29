@@ -1,0 +1,388 @@
+/* Impostazioni globali */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#sfondo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -10;
+    pointer-events: none;
+    user-select: none;
+    filter: blur(0.8px);
+}
+
+#toolbar {
+    position: fixed;
+    top: 1rem;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1.5rem;
+    z-index: 1000;
+    pointer-events: auto;
+}
+
+    #toolbar button {
+        background: rgba(255, 255, 255, 0.1);
+        color: rgba(251,245,148,1);
+        padding: 0.6rem 1.2rem;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        border-radius: 10px;
+        font-family: 'Orbitron', sans-serif;
+        font-size: 1rem;
+        cursor: pointer;
+        backdrop-filter: blur(2px);
+        -webkit-backdrop-filter: blur(2px);
+        box-shadow: inset 0 0 8px rgba(102, 252, 241, 0.25), 0 0 12px rgba(102, 252, 241, 0.15);
+        transition: all 0.2s ease-in-out;
+        text-shadow: 0 0 3px rgba(102, 252, 241, 0.2);
+    }
+
+        #toolbar button:hover {
+            background: rgba(102, 252, 241, 0.2);
+            box-shadow: inset 0 0 12px rgba(102, 252, 241, 0.4), 0 0 16px rgba(102, 252, 241, 0.3);
+            color: rgba(220,220,220,1);
+            border-color: rgba(102, 252, 241, 0.5);
+        }
+
+
+#container-centrale {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden; /* questa è la chiave */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s ease;
+}
+
+/* Contenitore principale */
+#astrolabio {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    width: 80vmin;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.2); /* vetro scuro trasparente */
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    overflow: hidden;
+    box-shadow: 0 0 20px #444;
+    transform-origin: center center;
+    user-select: none;
+    touch-action: none;
+    margin-bottom: 7rem;
+}
+
+
+#rotable {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform-origin: center center;
+}
+
+    #rotable.smooth-rotate {
+        transition: transform 0.5s ease;
+    }
+
+/* Contenitore dell'immagine */
+#sky-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 85%;
+    height: 85%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+/* Immagine del cielo */
+#mappa-stellare {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    user-select: none;
+    pointer-events: none;
+    overflow: hidden;
+    z-index:6;
+}
+
+#ghiera-giorni {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+    overflow: hidden;
+}
+
+.day-label {
+    position: absolute;
+    transform-origin: center center;
+    font-size: 1.7vmin;
+    white-space: nowrap;
+    color: white;
+    font-family: sans-serif;
+    user-select: none;
+    opacity: 0.7;
+}
+.month-label {
+    position: absolute;
+    transform-origin: center center;
+    font-size: 2.4vmin; /* più grande rispetto ai giorni */
+    white-space: nowrap;
+    color: white;
+    font-family: sans-serif;
+    font-weight: bold;
+    user-select: none;
+    opacity: 0.9;
+}
+
+.day-tick {
+    background: white;
+    position: absolute;
+}
+
+.tick-small {
+    width: 1px;
+    height: 6px;
+}
+
+.tick-medium {
+    width: 1.5px;
+    height: 10px;
+}
+
+.tick-fine-mese {
+    width: 2px;
+    height: 16px;
+    background: white;
+    z-index: 5;
+}
+
+#alidada {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    width: 85%;
+    height: 85%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    z-index: 4;
+    pointer-events: none;
+    mask-image: radial-gradient(ellipse 68% 62% at 50% 70%, transparent 58%, black 60%);
+    -webkit-mask-composite: destination-out;
+    mask-image: radial-gradient(ellipse 68% 60% at 50% 70%, transparent 58%, black 60%);
+    mask-composite: exclude;
+    background-color: rgba(0, 0, 0, 0.75); /* nero trasparente */
+    backdrop-filter: blur(2px); /* sfocatura vetro */
+    -webkit-backdrop-filter: blur(6px); /* per Safari */
+    border-radius: 50%; /* arrotondato */
+    box-shadow: 0 0 15px rgba(0,0,0,0.6) inset; /* ombra interna scura */
+}
+
+.compass-letter {
+    position: absolute;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 5vmin;
+    color: rgba(251,245,148,1);
+    text-shadow: 0 0 6px rgba(102, 252, 241, 0.7);
+    user-select: none;
+    pointer-events: none;
+    transform-origin: center center;
+}
+
+/* Posizioni personalizzate: regola i valori left e top */
+#letter-N {
+    top: 23%; /* poco sotto il bordo superiore */
+    left: 50%; /* centrato orizzontalmente */
+    transform: translate(-50%, 0); /* centro esatto orizzontale */
+}
+
+#letter-E {
+    top: 43%; /* centrato verticalmente */
+    left: 11%; /* verso sinistra */
+    transform: translate(0, -50%);
+}
+
+#letter-W {
+    top: 43%; /* centrato verticalmente */
+    left: 82%; /* verso destra */
+    transform: translate(0, -50%);
+}
+#ore-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
+.hour-label {
+    position: absolute;
+    transform-origin: center center;
+    font-size: 2vmin;
+    white-space: nowrap;
+    color: white;
+    font-family: sans-serif;
+    user-select: none;
+    opacity: 1;
+}
+
+#tick-ore {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 90%;
+    height: 90%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 5; /* sopra la mappa ma sotto eventuali etichette */
+}
+
+.tick-ora {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform-origin: center center;
+    background: white;
+    opacity: 1;
+    pointer-events: none;
+}
+
+.tick-ora-minor {
+    width: 1px;
+    height: 1.3vmin;
+}
+
+.tick-ora-major {
+    width: 2px;
+    height: 1.7vmin;
+}
+
+#barra-controlli {
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+    padding: 0.5rem 0.5rem;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    z-index: 9999;
+    font-family: 'Orbitron', sans-serif;
+    box-shadow: 0 -2px 10px rgba(102, 252, 241, 0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#time-display {
+    color: rgba(251,245,148,1);
+    font-size: 0.95rem;
+    text-shadow: 0 0 6px rgba(102, 252, 241, 0.3);
+    margin-bottom:0.1rem;
+    font-weight: 600;
+    text-align: center;
+    width: 95%;
+}
+
+.slider-group {
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.1rem;
+}
+
+    .slider-group label {
+        color: rgba(102, 252, 241, 0.9);
+        font-size: 0.85rem;
+        letter-spacing: 1px;
+        text-shadow: 0 0 4px rgba(102, 252, 241, 0.2);
+        margin-left: 4px;
+        margin-bottom: 0.2rem;
+    }
+
+input[type="range"] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    backdrop-filter: blur(2px);
+    transition: all 0.2s ease;
+    box-shadow: inset 0 0 6px rgba(102, 252, 241, 0.2);
+    margin-bottom: 0.2rem;
+    margin-top: 0.2rem;
+}
+
+    input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        height: 20px;
+        width: 20px;
+        background: rgba(102, 252, 241, 1);
+        border: 2px solid rgba(102, 245, 148, 0.9);
+        border-radius: 50%;
+        cursor: pointer;
+        box-shadow: 0 0 10px rgba(102, 252, 241, 0.7);
+        transition: transform 0.2s;
+    }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+    input[type="range"]::-moz-range-thumb {
+        height: 20px;
+        width: 20px;
+        background: rgba(102, 252, 241, 1);
+        border: 2px solid rgba(102, 245, 148, 0.9);
+        border-radius: 50%;
+        cursor: pointer;
+        box-shadow: 0 0 10px rgba(102, 252, 241, 0.7);
+    }
+
+
+/* 🔽 Media query per schermi piccoli */
+@media (max-width: 600px) {
+    #container-centrale {
+        /* Non serve ruotare di default, lo fa JS */
+    }
+    #toolbar button {
+        font-size: 0.9rem;
+        padding: 0.4rem 0.8rem;
+    }
+
+    /* Se il pulsante destro esce, spostalo un po’ più a sinistra */
+    #btn-ora-attuale {
+        margin-right: 1rem; /* o un valore adeguato */
+    }
+}

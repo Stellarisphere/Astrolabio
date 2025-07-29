@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Astrolabio Interattivo</title>
+    <link rel="stylesheet" href="astrolabio.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <img src="img/sfondo.jpg" alt="sfondo" id="sfondo" />
+    <div id="toolbar">
+        <button id="btn-zoom">🔍 Zoom</button>
+        <button id="btn-ora-attuale">🕒 Ora attuale</button>
+    </div>
+
+    <div id="container-centrale">
+        <div id="astrolabio">
+            <!-- Questo ruota -->
+            <div id="rotable">
+                <div id="sky-container">
+                    <img src="img/MappaStellare.png" alt="Cielo stellato" id="mappa-stellare" />
+                </div>
+                <div id="ghiera-giorni"></div>
+            </div>
+
+            <!-- Questo resta fisso sopra -->
+            <div id="alidada">
+                <div id="ore-container"></div>
+                <div id="tick-ore"></div>
+                <div class="compass-letter" id="letter-N">N</div>
+                <div class="compass-letter" id="letter-W">W</div>
+                <div class="compass-letter" id="letter-E">E</div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="barra-controlli">
+        <div id="time-display">01 Giu 2025 - 00:00</div>
+
+        <div class="slider-group">
+            <label for="slider-giorni">Giorni</label>
+            <input type="range" id="slider-giorni" min="0" max="364" value="0">
+        </div>
+
+        <div class="slider-group">
+            <label for="slider-minuti">Ore e Minuti</label>
+            <input type="range" id="slider-minuti" min="0" max="1439" step="1" value="0">
+        </div>
+    </div>
+
+
+
+    <script src="astrolabio.js"></script>
+</body>
+</html>
