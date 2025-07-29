@@ -205,7 +205,7 @@ document.getElementById("btn-zoom").addEventListener("click", () => {
 
         if (isPortrait) {
             // Se è verticale, ruota di 90°, scala e trasla per centrare
-            container.style.transform = "scale(1.65) translate(0, 0)";
+            container.style.transform = "scale(1.65) translate(0, 7%)";
             container.style.transformOrigin = "center center";
         } else {
             // Se è orizzontale, solo scala e trasla normalmente
